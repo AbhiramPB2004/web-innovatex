@@ -7,8 +7,11 @@ import Events from './Components/Events';
 import Contacts from './Components/Contacts';
 import Profile from './Components/Profile';
 
+
+
 function App() {
   return (
+    
     <Router>
       <AppContent />
     </Router>
@@ -29,6 +32,7 @@ function AppContent() {
         <>
           <div id="dashboard"><Dashboard /></div>
           <div id="about"><About /></div>
+          <div >asdui</div>
           <div id="events"><Events /></div>
           <div id="contact"><Contacts /></div>
         </>
