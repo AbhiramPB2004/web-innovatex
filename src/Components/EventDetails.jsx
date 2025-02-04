@@ -3,7 +3,7 @@ export const eventDetails = {
       title: "CodeRush (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 200,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -12,7 +12,7 @@ export const eventDetails = {
       title: "PITCHATHON ",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 200,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -21,7 +21,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee:500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -30,7 +30,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -39,7 +39,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -47,7 +47,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -55,7 +55,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -64,7 +64,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -73,7 +73,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -82,7 +82,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -91,7 +91,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      
@@ -100,7 +100,7 @@ export const eventDetails = {
       title: "CodeRush2 (24Hrs Hackathon)",
       description:
         "A 24-hour software hackathon challenges participants to create innovative solutions.",
-      fee: "TBA",
+      fee: 500,
       date: "April 15, 2025",
       time: "10:00 AM",
       venue: "Conference Hall A",      

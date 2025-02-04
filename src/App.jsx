@@ -14,6 +14,7 @@ function App() {
     
     <Router>
       <AppContent />
+      
     </Router>
   );
 }
@@ -28,11 +29,12 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
       </Routes>
       {location.pathname !== "/profile" && location.pathname !== "/" && (
         <>
           <div id="dashboard"><Dashboard /></div>
-          <div id="about"><About /></div>
+       
           <div >asdui</div>
           <div id="events"><Events /></div>
           <div id="contact"><Contact /></div>
