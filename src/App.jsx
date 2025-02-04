@@ -4,7 +4,7 @@ import Navbar from './Components/Navbar';
 import Dashboard from './Components/Dashboard';
 import About from './Components/About';
 import Events from './Components/Events';
-import Contacts from './Components/Contacts';
+import Contact from './Components/Contact';
 import Profile from './Components/Profile';
 
 
@@ -20,6 +20,7 @@ function App() {
 
 function AppContent() {
   const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   return (
     <>
@@ -34,7 +35,7 @@ function AppContent() {
           <div id="about"><About /></div>
           <div >asdui</div>
           <div id="events"><Events /></div>
-          <div id="contact"><Contacts /></div>
+          <div id="contact"><Contact /></div>
         </>
       )}
     </>

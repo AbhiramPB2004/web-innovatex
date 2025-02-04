@@ -1,6 +1,6 @@
-import React from "react";
-import { Link as ScrollLink } from "react-scroll";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
 
 const Navbar = () => {
   return (

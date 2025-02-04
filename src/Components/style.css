@@ -8,9 +8,12 @@ body {
     background: #0a0a0a;
     color: #ffffff;
     overflow-x: hidden;
-    background-image: url(C:\Users\Abhiram\OneDrive\Desktop\innovatex-updated\src\assets\bg.png);
+    background-image: url(../assets/bg.png);
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    position: relative;
     
 }
 
@@ -147,3 +150,75 @@ background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue)); /* Gradi
 background: rgba(255, 255, 255, 0.1); /* Track background */
 border-radius: 4px; /* Rounded track */
 }
+
+
+/* about.css */
+.about-container {
+    /* background: linear-gradient(to bottom, #000, #0a0a2a); */
+    /* color: white; */
+    text-align: center;
+    padding: 50px 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .about-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .carousel {
+    display: flex;
+    gap: 30px;
+    perspective: 1200px;
+    overflow-x: auto;
+    padding: 20px;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 20px rgba(255, 255, 255, 0.3);
+    width: 300px;
+    min-height: 350px;
+    text-align: center;
+    transition: transform 0.5s;
+    scroll-snap-align: center;
+  }
+  
+  .card:hover {
+    transform: rotateY(15deg) scale(1.1);
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    margin: 15px 0;
+  }
+  
+  .card-description {
+    font-size: 1rem;
+    padding: 0 15px;
+  }
+  
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  

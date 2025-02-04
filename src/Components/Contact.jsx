@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Contacts = () => {
+const Contact = () => {
   return (
     <div class="container mx-auto px-4">
             <h2 class="orbitron text-3xl md:text-4xl font-bold mb-12 text-center text-cyan-400">Get In Touch</h2>
@@ -56,4 +56,4 @@ const Contacts = () => {
   )
 }
 
-export default Contacts
+export default Contact
