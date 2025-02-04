@@ -2,10 +2,13 @@ import React from 'react'
 import { useState, useRef, useContext } from 'react'; 
 import { AuthContext, AuthProvider } from '../Authentication/context';
 import { eventDetails } from './EventDetails';
+import axios from 'axios';
 
 const Events = () => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const[totalAmount, setTotalAmount] = useState(0);
+
 
   //get the authentication from context.jsx
   const { user,signIn, signOut } = useContext(AuthContext); //handleGoogleSignIn
@@ -14,6 +17,8 @@ const Events = () => {
     data: null,
   });
 
+  const [paymentModal,SetPaymentModal] = useState(false);
+
   const teamMembersSectionRef = useRef(null);
 
   const [selectedEvent, setSelectedEvent] = useState('');
@@ -21,9 +26,11 @@ const Events = () => {
   const [teamLeaderName, setTeamLeaderName] = useState('');
   const [teamLeaderEmail, setTeamLeaderEmail] = useState(user.email);
   const [teamLeaderPhone, setTeamLeaderPhone] = useState('');
-  const [teamSize, setTeamSize] = useState('');
+  const [teamSize, setTeamSize] = useState(1);
   const [teamMembers, setTeamMembers] = useState([]);
   const [registerDetail, setRegisterDetail] = useState({ isOpen: false, data: null });
+
+
 
   const handleGoogleSignIn = async () => {
     try {
@@ -58,6 +65,7 @@ const Events = () => {
       if (response.status === 200) {
         console.log("Server Response:", response.data);
         alert("Registration successful!");
+        handleRegistrationModalOff();
         return true;
       } else {
         console.error("Error:", response.data);
@@ -66,39 +74,37 @@ const Events = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred!");
-      return false;
+      handleRegistrationModalOff(); // remove this line after development 
+      return true; //change it to false after development 
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const formDetails = {
-      teamLeaderName: e.target.teamLeaderName.value,
-      teamLeaderEmail: e.target.teamLeaderEmail.value,
-      teamLeaderPhone: e.target.teamLeaderPhone.value,
-      teamSize: e.target.teamSize.value,
-      teamMembers: [],
+      event: selectedEvent,
+      teamLeaderName: teamLeaderName,
+      teamLeaderEmail: teamLeaderEmail,
+      teamLeaderPhone: teamLeaderPhone,
+      teamSize: teamSize,
+      teamMembers: teamMembers,
     };
+    console.log("Form Details:", formDetails);
   
-    const teamMemberInputs = teamMembersSectionRef.current.querySelectorAll("input");
-    teamMemberInputs.forEach((input) => {
-      const memberDetails = {
-        memberName: input.name === "memberName" ? input.value : null,
-        memberPhone: input.name === "memberPhone" ? input.value : null,
-      };
-      formDetails.teamMembers.push(memberDetails);
-    });
+  
     console.log("Form Details:", formDetails);
   
     const isSuccess = await postFormDetails(formDetails);
     if (isSuccess) {
       e.target.reset();
+      
+    }else{
+      
     }
   };
 
   const handleTeamSizeChange = (e) => {
-    const size = parseInt(e.target.value)-1;
+    const size = parseInt(e.target.value);
     setTeamSize(size);
     setTeamMembers(Array(size).fill({ memberName: '', memberPhone: '' }));
   };
@@ -189,6 +195,41 @@ const Events = () => {
           </div>
         </div>
       )}
+
+{paymentModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center">
+          <div className="bg-black text-white p-6 rounded-lg gradient-border relative max-h-[90vh] w-full md:w-[60%] lg:w-[50%] overflow-y-auto custom-scrollbar">
+            <button
+              onClick={closeEventDetailsModal}
+              className="absolute top-3 right-3 text-2xl text-cyan-400 hover:text-fuchsia-400"
+            >
+              &times;
+            </button>
+            <h2 className="text-center text-2xl font-bold text-cyan-400 mb-6">
+              {eventDetailsModal.data.title}
+            </h2>
+            <p className="text-gray-300 mb-4">{eventDetailsModal.data.description}</p>
+            <ul className="space-y-2">
+              <li>
+                <strong>Entry Fee:</strong> {eventDetailsModal.data.fee}
+              </li>
+              <li>
+                <strong>Date:</strong> {eventDetailsModal.data.date}
+              </li>
+              <li>
+                <strong>Time:</strong> {eventDetailsModal.data.time}
+              </li>
+              <li>
+                <strong>Venue:</strong> {eventDetailsModal.data.venue}
+              </li> 
+            </ul>
+          </div>
+        </div>
+      )}
+
+
+
+
 
       {/* Registration Modal */}
       {registerDetail.isOpen && (
@@ -306,7 +347,7 @@ const Events = () => {
                       name="memberName"
                       placeholder={`Member ${index + 1} Name`}
                       className="w-full p-2 bg-gray-900 border border-cyan-500/30 rounded text-white"
-                      value={member.memberName}
+                      
                       onChange={(e) => handleTeamMemberChange(index, 'memberName', e.target.value)}
                     />
                     <input
@@ -314,7 +355,7 @@ const Events = () => {
                       name="memberPhone"
                       placeholder={`Member ${index + 1} Phone`}
                       className="w-full p-2 bg-gray-900 border border-cyan-500/30 rounded text-white"
-                      value={member.memberPhone}
+                      type="tel"
                       onChange={(e) => handleTeamMemberChange(index, 'memberPhone', e.target.value)}
                     />
                   </div>
@@ -322,10 +363,10 @@ const Events = () => {
               </div>
               
               <div>
-                <p class="text-cyan-400">Total Amount: <span id="total-amount" class="text-white">₹{registerDetail.data.fee}</span></p>
+                <p class="text-cyan-400">Total Amount: <span id="total-amount" class="text-white">₹{registerDetail.data.fee*teamSize}</span></p>
               </div>
-              <button type="submit" className="px-8 py-3 rounded-lg border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black">
-                  Submit
+              <button type="submit"  className="px-8 py-3 rounded-lg border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black">
+                  Pay
                 </button>
             </form>
           </div>

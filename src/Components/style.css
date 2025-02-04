@@ -8,9 +8,10 @@ body {
     background: #0a0a0a;
     color: #ffffff;
     overflow-x: hidden;
-    background-image: url(C:\Users\Abhiram\OneDrive\Desktop\innovatex-updated\src\assets\bg.png);
+    background-image: url(../assets/bg.png);
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-size: cover;
     
 }
 

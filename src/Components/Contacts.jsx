@@ -2,7 +2,8 @@ import React from 'react'
 
 const Contacts = () => {
   return (
-    <div class="container mx-auto px-4">
+    <div className='backdrop-filter backdrop-blur-lg  bg-opacity-30 py-12'>
+    <div class="container mx-auto px-4 ">
             <h2 class="orbitron text-3xl md:text-4xl font-bold mb-12 text-center text-cyan-400">Get In Touch</h2>
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="gradient-border bg-black p-6 rounded-xl">
@@ -52,6 +53,7 @@ const Contacts = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
   )
 }

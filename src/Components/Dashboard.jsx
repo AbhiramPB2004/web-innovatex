@@ -8,6 +8,7 @@ import { useContext } from 'react'
 import "./style.css"
 import Events from './Events'
 import Contacts from './Contacts';
+import About from './About';
 
 const Dashboard = () => {
   const [countdown, setCountdown] = useState({
