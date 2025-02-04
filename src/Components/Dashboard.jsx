@@ -5,6 +5,9 @@ import { auth, provider, signInWithPopup } from '../firebase/firebase'
 import { AuthContext, AuthProvider } from '../Authentication/context'
 import { useEffect, useState } from 'react'
 import { useContext } from 'react'
+import "./style.css"
+import Events from './Events'
+import Contacts from './Contacts';
 
 const Dashboard = () => {
   const [countdown, setCountdown] = useState({
@@ -73,9 +76,7 @@ const Dashboard = () => {
         Unleash Innovation. Embrace the Future.
       </p>
       <div className="flex flex-col md:flex-row justify-center gap-4">
-        <button className="gradient-border bg-black px-8 py-3 rounded-lg text-cyan-400 hover:text-white"> {/* onClick={handleGoogleSignIn} */}
-          Register Now
-        </button>
+       
         <button className="px-8 py-3 rounded-lg border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black">
           <ScrollLink to="events" smooth={true} duration={500}>Explore Events</ScrollLink>
         </button>
@@ -101,6 +102,13 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+    <Events />
+    <Contacts />
+
+    
+
+      
     </div>
   )
 }

@@ -1,0 +1,147 @@
+:root {
+    --neon-blue: #94d4d7;
+    --neon-pink: #ff00ff;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: #0a0a0a;
+    color: #ffffff;
+    overflow-x: hidden;
+    background-image: url(bgImg.jpg);
+    
+}
+
+.orbitron {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.neon-glow {
+    text-shadow: 0 0 10px var(--neon-blue),
+                 0 0 20px var(--neon-blue),
+                 0 0 30px var(--neon-blue);
+}
+
+.gradient-border {
+    position: relative;
+}
+
+.gradient-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+    z-index: -1;
+    border-radius: inherit;
+    animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.cyber-grid {
+    background-image: radial-gradient(#00f3ff22 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+
+
+
+.custom-scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/* Custom Scrollbar for the Modal */
+.custom-scrollbar::-webkit-scrollbar {
+width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink)); /* Neon gradient */
+border-radius: 4px; /* Rounded corners */
+box-shadow: 0 0 8px var(--neon-blue); /* Glow effect */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue)); /* Invert colors on hover */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+background: rgba(255, 255, 255, 0.1); /* Faint track color */
+border-radius: 4px;
+}
+
+.glitter {
+    position: absolute;
+   background-color: rgba(255, 255, 255, 0.8);
+   border-radius: 50%;
+   animation: glitter-animation 0.6s ease-out;
+   pointer-events: none; /* Prevent glitter from interfering with clicks */
+}   
+
+@keyframes glitter-animation {
+   0% {
+       transform: scale(0.8);
+       opacity: 1;
+   }
+   50% {
+       transform: scale(1.4);
+       opacity: 0.4;
+   }
+   100% {
+       transform: scale(2);
+       opacity: 0;
+   }
+}
+
+/* Default Modal Styling for Mobile (Scrollable) */
+#registration-modal .gradient-border {
+display: flexbox;
+width: 90%; /* Take up 90% of screen width */
+max-width: 400px; /* Maximum width for small devices */
+max-height: 90vh; /* Limit height for scrollable content */
+overflow-y: auto; /* Enable vertical scrolling */
+overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+/* Styling for Tablets and Laptops */
+@media (min-width: 768px) {
+#registration-modal .gradient-border {
+width: 60%; /* Increase width to 60% of screen */
+max-width: 600px; /* Cap width at 600px for larger screens */
+max-height: 80vh; /* Allow more height */
+}
+}
+
+/* Styling for Larger Desktops */
+@media (min-width: 1024px) {
+#registration-modal .gradient-border {
+width: 50%; /* Further increase width */
+max-width: 800px; /* Cap width at 800px */
+max-height: 80vh; /* Limit height */
+}
+}
+
+/* Custom Scrollbar Styling */
+#registration-modal .gradient-border::-webkit-scrollbar {
+width: 8px; /* Scrollbar width */
+}
+
+#registration-modal .gradient-border::-webkit-scrollbar-thumb {
+background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink)); /* Neon gradient */
+border-radius: 4px; /* Rounded corners */
+}
+
+#registration-modal .gradient-border::-webkit-scrollbar-thumb:hover {
+background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue)); /* Gradient on hover */
+}
+
+#registration-modal .gradient-border::-webkit-scrollbar-track {
+background: rgba(255, 255, 255, 0.1); /* Track background */
+border-radius: 4px; /* Rounded track */
+}
