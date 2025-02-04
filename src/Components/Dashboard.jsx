@@ -66,8 +66,9 @@ const Dashboard = () => {
   };
         
   return (
-    <div className="container mx-auto px-4 py-20 text-center">
-      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 glitch">
+    <>
+    <div className="   py-20 text-center ">
+      <h1 className="text-4xl  md:text-6xl lg:text-7xl font-bold mb-6 glitch ">
         <span className="bg-clip-text text-transparent text-center bg-gradient-to-r from-cyan-400 to-fuchsia-500">
           <span id="element" className="justify-center self-center"></span>
         </span>
@@ -102,14 +103,11 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
+    </div>
     <Events />
     <Contacts />
 
-    
-
-      
-    </div>
+    </>
   )
 }
 

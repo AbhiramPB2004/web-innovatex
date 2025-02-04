@@ -41,6 +41,7 @@ const Events = () => {
       await handleGoogleSignIn();
     }
     setSelectedEvent(eventDetails.title);
+    console.log("Selected Event:", eventDetails);
     setRegisterDetail({ isOpen: true, data: eventDetails });
   };
 
@@ -122,7 +123,7 @@ const Events = () => {
   
   
   return (
-    <div className="container mx-auto px-4 my-20">
+    <div className="container mx-auto px-4 my-10">
       <h1 className="text-3xl md:text-4xl font-bold mb-12 text-center text-cyan-400">
         Featured Events
       </h1>
@@ -143,13 +144,13 @@ const Events = () => {
                 Prize: {eventDetails[key].fee}
               </span>
               <button
-                onClick={() => openEventDetailsModal(key)}
+                onClick={() => openEventDetailsModal(eventDetails[key])}
                 className="px-2 py-3 bg-cyan-400 text-black rounded hover:bg-cyan-300"
               >
                 View Details
               </button>
               <button
-                onClick={() => handleRegistrationModalOn(key)}
+                onClick={() => handleRegistrationModalOn(eventDetails[key])}
                 className="px-2 py-3 bg-cyan-400 text-black rounded hover:bg-cyan-300"
               >
                 Register
