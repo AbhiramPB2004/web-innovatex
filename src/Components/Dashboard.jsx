@@ -1,13 +1,9 @@
-import React from 'react'
-import Typed from 'typed.js'
-import { Link as ScrollLink } from 'react-scroll';
-import { auth, provider, signInWithPopup } from '../firebase/firebase'
-import { AuthContext, AuthProvider } from '../Authentication/context'
-import { useEffect, useState } from 'react'
-import { useContext } from 'react'
-import "./style.css"
-import Events from './Events'
-import Contacts from './Contact';
+import React, { useEffect, useState, useContext } from "react";
+import Typed from "typed.js";
+import { Link as ScrollLink } from "react-scroll";
+import { auth, provider, signInWithPopup } from "../firebase/firebase";
+import { AuthContext } from "../Authentication/context";
+import "./style.css";
 
 const Dashboard = () => {
   const [countdown, setCountdown] = useState({
@@ -19,8 +15,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     new Typed("#element", {
-      strings: ["Innovatex 2.0 ", " Innovatex 3.0"],
-      typeSpeed: 150,
+      strings: ["Innovatex"],
+      typeSpeed: 100,
+      backSpeed: 60,
+      loop: false,
     });
   }, []);
 
@@ -32,18 +30,12 @@ const Dashboard = () => {
       const now = Date.now();
       const distance = eventDate - now;
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24))
-        .toString()
-        .padStart(2, "0");
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-        .toString()
-        .padStart(2, "0");
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-        .toString()
-        .padStart(2, "0");
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000)
-        .toString()
-        .padStart(2, "0");
+      if (distance < 0) return;
+
+      const days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, "0");
+      const hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, "0");
+      const minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
+      const seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, "0");
 
       setCountdown({ days, hours, minutes, seconds });
     };
@@ -52,59 +44,58 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // const {user, signIn} = useContext(AuthContext)
-
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log("User Info:", user);
-      signIn(user);
+      console.log("User Info:", result.user);
     } catch (error) {
       console.error("Error during sign-in:", error.message);
     }
   };
-        
+
   return (
-    <>
+    
     <div id='dashboard' className="py-20 text-center ">
       <h1 className="text-4xl  md:text-6xl lg:text-7xl font-bold mb-6 glitch ">
         <span className="bg-clip-text text-transparent text-center bg-gradient-to-r from-cyan-400 to-fuchsia-500">
           <span id="element" className="justify-center self-center"></span>
         </span>
       </h1>
-      <p className="text-xl md:text-2xl mb-8 text-gray-300">
-        Unleash Innovation. Embrace the Future.
-      </p>
-      <div className="flex flex-col md:flex-row justify-center gap-4">
-        <button className="px-8 py-3 rounded-lg border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black">
-          <ScrollLink to="events" smooth={true} duration={500}>Explore Events</ScrollLink>
+
+      {/* Animated Heading */}
+      <h1 className="relative z-10 text-4xl md:text-6xl lg:text-7xl font-extrabold glitch">
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+          <span id="element"></span>
+        </span>
+      </h1>
+      <p className="relative z-10 mt-3 text-xl md:text-2xl text-gray-300">Unleash Innovation. Embrace the Future.</p>
+
+      {/* CTA Button */}
+      <div className="relative z-10 mt-6">
+        <button className="px-8 py-3 text-lg font-semibold rounded-lg border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all duration-300 shadow-lg">
+          <ScrollLink to="events" smooth={true} duration={500}>
+            Explore Events
+          </ScrollLink>
         </button>
       </div>
-      <div className="mt-12">
+
+      {/* Countdown Timer */}
+      <div className="relative z-10 mt-12">
         <div className="text-2xl mb-4 text-cyan-400">Event Starts In</div>
-        <div className="flex justify-center gap-4" id="countdown">
-          <div className="bg-black/50 p-4 rounded-lg border border-cyan-500/30">
-            <div className="text-3xl font-bold">{countdown.days}</div>
-            <div className="text-sm">Days</div>
-          </div>
-          <div className="bg-black/50 p-4 rounded-lg border border-cyan-500/30">
-            <div className="text-3xl font-bold">{countdown.hours}</div>
-            <div className="text-sm">Hours</div>
-          </div>
-          <div className="bg-black/50 p-4 rounded-lg border border-cyan-500/30">
-            <div className="text-3xl font-bold">{countdown.minutes}</div>
-            <div className="text-sm">Minutes</div>
-          </div>
-          <div className="bg-black/50 p-4 rounded-lg border border-cyan-500/30">
-            <div className="text-3xl font-bold">{countdown.seconds}</div>
-            <div className="text-sm">Seconds</div>
-          </div>
+        <div className="flex justify-center gap-6">
+          {Object.entries(countdown).map(([unit, value]) => (
+            <div
+              key={unit}
+              className="bg-black/50 p-6 rounded-lg border border-cyan-500/30 text-center shadow-lg transform transition-transform hover:scale-110"
+            >
+              <div className="text-4xl font-extrabold text-white">{value}</div>
+              <div className="text-sm uppercase tracking-wider text-cyan-300">{unit}</div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
