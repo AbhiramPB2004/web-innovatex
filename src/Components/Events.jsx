@@ -117,6 +117,7 @@ const Events = () => {
 
   // Event Details Modal
   const openEventDetailsModal = (eventKey) => {
+    console.log("Event Key:", eventDetails[eventKey]);
     setEventDetailsModal({ isOpen: true, data: eventDetails[eventKey] });
   };
 
@@ -150,7 +151,7 @@ const Events = () => {
                 Prize: {eventDetails[key].fee}
               </span>
               <button
-                onClick={() => openEventDetailsModal(eventDetails[key])}
+                onClick={() => openEventDetailsModal(key)}
                 className="px-2 py-3 bg-cyan-400 text-black rounded hover:bg-cyan-300"
               >
                 View Details
@@ -206,7 +207,7 @@ const Events = () => {
               &times;
             </button>
             <h2 className="text-center text-2xl font-bold text-cyan-400 mb-6">
-              {eventDetailsModal.data.title}
+              something
             </h2>
             <p className="text-gray-300 mb-4">{eventDetailsModal.data.description}</p>
             <ul className="space-y-2">
