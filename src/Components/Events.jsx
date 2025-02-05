@@ -351,7 +351,6 @@ const Events = () => {
                       onChange={(e) => handleTeamMemberChange(index, 'memberName', e.target.value)}
                     />
                     <input
-                      type="text"
                       name="memberPhone"
                       placeholder={`Member ${index + 1} Phone`}
                       className="w-full p-2 bg-gray-900 border border-cyan-500/30 rounded text-white"
