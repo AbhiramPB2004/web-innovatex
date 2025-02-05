@@ -27,7 +27,7 @@ const About = () => {
     },
   ];
   return (
-    <div className="about-container">
+    <div id='about' className="about-container">
       <h1 className="about-title">🚀 About Us</h1>
       <div className="carousel">
         {slides.map((slide, index) => (
