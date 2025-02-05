@@ -103,9 +103,6 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-    <Events />
-    <Contacts />
-
     </>
   )
 }
