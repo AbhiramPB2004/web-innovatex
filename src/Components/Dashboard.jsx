@@ -7,8 +7,7 @@ import { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import "./style.css"
 import Events from './Events'
-import Contacts from './Contacts';
-import About from './About';
+import Contacts from './Contact';
 
 const Dashboard = () => {
   const [countdown, setCountdown] = useState({
@@ -68,7 +67,7 @@ const Dashboard = () => {
         
   return (
     <>
-    <div className="   py-20 text-center ">
+    <div className="py-20 text-center ">
       <h1 className="text-4xl  md:text-6xl lg:text-7xl font-bold mb-6 glitch ">
         <span className="bg-clip-text text-transparent text-center bg-gradient-to-r from-cyan-400 to-fuchsia-500">
           <span id="element" className="justify-center self-center"></span>
@@ -78,7 +77,6 @@ const Dashboard = () => {
         Unleash Innovation. Embrace the Future.
       </p>
       <div className="flex flex-col md:flex-row justify-center gap-4">
-       
         <button className="px-8 py-3 rounded-lg border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black">
           <ScrollLink to="events" smooth={true} duration={500}>Explore Events</ScrollLink>
         </button>
@@ -105,9 +103,6 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-    <Events />
-    <Contacts />
-
     </>
   )
 }

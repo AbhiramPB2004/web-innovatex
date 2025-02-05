@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Contacts = () => {
+const Contact = () => {
   return (
     <div className='backdrop-filter backdrop-blur-lg  bg-opacity-30 py-12'>
     <div class="container mx-auto px-4 ">
@@ -58,4 +58,4 @@ const Contacts = () => {
   )
 }
 
-export default Contacts
+export default Contact
