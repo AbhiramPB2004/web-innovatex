@@ -129,7 +129,7 @@ const Events = () => {
   
   
   return (
-    <div className="container mx-auto px-4 my-10">
+    <div id='events' className="container mx-auto px-4 my-10">
       <h1 className="text-3xl md:text-4xl font-bold mb-12 text-center text-cyan-400">
         Featured Events
       </h1>
