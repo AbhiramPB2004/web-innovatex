@@ -1,8 +1,12 @@
 import React from 'react'
 import { useState, useRef, useContext } from 'react'; 
 import { AuthContext, AuthProvider } from '../Authentication/context';
+import { signInWithPopup, GoogleAuthProvider, getAuth } from 'firebase/auth';
+import { auth, provider,db } from '../firebase/firebase';
 import { eventDetails } from './EventDetails';
 import axios from 'axios';
+import { collection, addDoc } from "firebase/firestore";
+
 
 const Events = () => {
 
@@ -24,7 +28,7 @@ const Events = () => {
   const [selectedEvent, setSelectedEvent] = useState('');
   const [teamName, setTeamName] = useState('');
   const [teamLeaderName, setTeamLeaderName] = useState('');
-  const [teamLeaderEmail, setTeamLeaderEmail] = useState(user.email);
+  const [teamLeaderEmail, setTeamLeaderEmail] = useState('');
   const [teamLeaderPhone, setTeamLeaderPhone] = useState('');
   const [teamSize, setTeamSize] = useState(1);
   const [teamMembers, setTeamMembers] = useState([]);
@@ -34,7 +38,7 @@ const Events = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider).catch(console.log("something went wrong"));
       const user = result.user;
       console.log("User Info:", user);
       signIn(user);
@@ -43,66 +47,51 @@ const Events = () => {
     }
   };
 
+
+  const HandleFormSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form Submitted");
+    console.log("Team Name:", teamName);
+    console.log("Team Leader Name:", teamLeaderName);
+    console.log("Team Leader Email:", teamLeaderEmail);
+    console.log("Team Leader Phone:", teamLeaderPhone);
+    console.log("Team Size:", teamSize);
+    console.log("Team Members:", teamMembers);
+    console.log("Selected Event:", selectedEvent);
+    console.log("Total Amount:", selectedEvent.fee*teamSize);
+    setTotalAmount(selectedEvent.fee*teamSize);
+    const docRef = await addDoc(collection(db, "USER-Details"), {
+      EventName: selectedEvent,
+      TeamLeaderEmail: teamLeaderName,
+      LeaderEmail: user.email,
+      TeamLeaderPhone: teamLeaderPhone,
+      TeamMembers: teamMembers,
+      TeamName: teamName,
+    });
+    console.log("Document written with ID: ", docRef.id);
+  };
+ 
   const handleRegistrationModalOn = async (eventDetails) => {
-    if (!user.email) {
+    if(user){
+      console.log("User Info:", user);
+      console.log("Event Details:", eventDetails);
+      setSelectedEvent(eventDetails);
+      setRegisterDetail({ isOpen: true, data: eventDetails });
+
+    }else{  
+
+      console.log("User not logged in");
       await handleGoogleSignIn();
+      setSelectedEvent(eventDetails);
+      setRegisterDetail({ isOpen: true, data: eventDetails });
     }
-    setSelectedEvent(eventDetails.title);
-    console.log("Selected Event:", eventDetails);
-    setRegisterDetail({ isOpen: true, data: eventDetails });
   };
 
   const handleRegistrationModalOff = () => {
     setRegisterDetail({ isOpen: false, data: null });
   };
 
-  const postFormDetails = async (formDetails) => {
-    try {
-      const response = await axios.post("http://localhost:4000/register", formDetails, {
-        headers: { "Content-Type": "application/json" },
-      });
   
-      if (response.status === 200) {
-        console.log("Server Response:", response.data);
-        alert("Registration successful!");
-        handleRegistrationModalOff();
-        return true;
-      } else {
-        console.error("Error:", response.data);
-        alert("Registration failed!");
-        return false;
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      handleRegistrationModalOff(); // remove this line after development 
-      return true; //change it to false after development 
-    }
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    const formDetails = {
-      event: selectedEvent,
-      teamLeaderName: teamLeaderName,
-      teamLeaderEmail: teamLeaderEmail,
-      teamLeaderPhone: teamLeaderPhone,
-      teamSize: teamSize,
-      teamMembers: teamMembers,
-    };
-    console.log("Form Details:", formDetails);
-  
-  
-    console.log("Form Details:", formDetails);
-  
-    const isSuccess = await postFormDetails(formDetails);
-    if (isSuccess) {
-      e.target.reset();
-      
-    }else{
-      
-    }
-  };
-
   const handleTeamSizeChange = (e) => {
     const size = parseInt(e.target.value);
     setTeamSize(size);
@@ -141,10 +130,13 @@ const Events = () => {
             className="gradient-border bg-black p-6 rounded-xl"
           >
             <div className="text-cyan-400 text-xl mb-4">
+            <img src={eventDetails[key].image} alt={eventDetails[key].title} className="w-full h-auto rounded" />
+            </div>
+            <div className="text-cyan-400 text-xl mb-4">
               {eventDetails[key].title}
             </div>
             <p className="text-gray-300 mb-4">
-              {eventDetails[key].description}
+              {eventDetails[key].tagline}
             </p>
             <div className="flex justify-between items-center">
               <span className="text-fuchsia-400">
@@ -154,13 +146,7 @@ const Events = () => {
                 onClick={() => openEventDetailsModal(key)}
                 className="px-2 py-3 bg-cyan-400 text-black rounded hover:bg-cyan-300"
               >
-                View Details
-              </button>
-              <button
-                onClick={() => handleRegistrationModalOn(eventDetails[key])}
-                className="px-2 py-3 bg-cyan-400 text-black rounded hover:bg-cyan-300"
-              >
-                Register
+                Explore
               </button>
             </div>
           </div>
@@ -175,13 +161,28 @@ const Events = () => {
             >
               &times;
             </button>
-            <h2 className="text-center text-2xl font-bold text-cyan-400 mb-6">
+            <div className="mb-4">
+              <img src={eventDetailsModal.data.image} alt={eventDetailsModal.data.title} className="w-full h-auto rounded" />
+            </div>
+            <h2 className="text-center text-2xl font-bold text-cyan-400 mb-2">
               {eventDetailsModal.data.title}
             </h2>
+            <h3 className="text-center text-xl text-cyan-300 mb-4">
+              {eventDetailsModal.data.tagline}
+            </h3>
             <p className="text-gray-300 mb-4">{eventDetailsModal.data.description}</p>
             <ul className="space-y-2">
               <li>
                 <strong>Entry Fee:</strong> {eventDetailsModal.data.fee}
+              </li>
+              <li>
+                <strong>Price Pool:</strong> {eventDetailsModal.data.price_pool}
+              </li>
+              <li>
+                <strong>Event Head:</strong> {eventDetailsModal.data.event_head}
+              </li>
+              <li>
+                <strong>Event Head Number:</strong> {eventDetailsModal.data.event_head_number}
               </li>
               <li>
                 <strong>Date:</strong> {eventDetailsModal.data.date}
@@ -191,46 +192,25 @@ const Events = () => {
               </li>
               <li>
                 <strong>Venue:</strong> {eventDetailsModal.data.venue}
-              </li> 
+              </li>
             </ul>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => window.open('/src/assets/brochure.pdf', '_blank')}
+                className="px-2 py-3 bg-cyan-400 text-black rounded hover:bg-cyan-300"
+              >
+                View Details
+              </button>
+              <button
+                onClick={() => handleRegistrationModalOn(eventDetailsModal.data.title)}
+                className="px-2 py-3 bg-green-400 text-black rounded hover:bg-green-300"
+              >
+                Register
+              </button>
+            </div>
           </div>
         </div>
       )}
-
-{paymentModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center">
-          <div className="bg-black text-white p-6 rounded-lg gradient-border relative max-h-[90vh] w-full md:w-[60%] lg:w-[50%] overflow-y-auto custom-scrollbar">
-            <button
-              onClick={closeEventDetailsModal}
-              className="absolute top-3 right-3 text-2xl text-cyan-400 hover:text-fuchsia-400"
-            >
-              &times;
-            </button>
-            <h2 className="text-center text-2xl font-bold text-cyan-400 mb-6">
-              something
-            </h2>
-            <p className="text-gray-300 mb-4">{eventDetailsModal.data.description}</p>
-            <ul className="space-y-2">
-              <li>
-                <strong>Entry Fee:</strong> {eventDetailsModal.data.fee}
-              </li>
-              <li>
-                <strong>Date:</strong> {eventDetailsModal.data.date}
-              </li>
-              <li>
-                <strong>Time:</strong> {eventDetailsModal.data.time}
-              </li>
-              <li>
-                <strong>Venue:</strong> {eventDetailsModal.data.venue}
-              </li> 
-            </ul>
-          </div>
-        </div>
-      )}
-
-
-
-
 
       {/* Registration Modal */}
       {registerDetail.isOpen && (
@@ -238,7 +218,7 @@ const Events = () => {
           <div class="bg-black text-white p-6 rounded-lg max-w-lg w-full gradient-border relative">
             <button id="close-modal" onClick={handleRegistrationModalOff} class="absolute top-3 right-3 text-2xl text-cyan-400 hover:text-fuchsia-400 transition-colors">&times;</button>
             <h2 class="text-center orbitron text-2xl font-bold text-cyan-400 mb-6">Register Now</h2>
-            <form id="registration-form" class="space-y-4" onSubmit={handleFormSubmit}>
+            <form id="registration-form" class="space-y-4" onSubmit={HandleFormSubmit} >
               <div>
                 <label className="block text-cyan-400 mb-2">Event Name</label>
                 <input
@@ -282,11 +262,11 @@ const Events = () => {
                   type="email"
                   id="team-leader-email"
                   name="teamLeaderEmail"
-                  disabled
-                  value={teamLeaderEmail}
-                  placeholder="Enter your email"
+                  readOnly
+                  value={user.email}
+                  // placeholder="Enter your email"
                   className="w-full p-2 bg-gray-900 border border-cyan-500/30 rounded text-white"
-                  required
+                  // required
                 />
               </div>
               <div>
@@ -370,7 +350,38 @@ const Events = () => {
             </form>
           </div>
         </div>
-      )}   
+      )}  
+
+      {paymentModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center">
+          <div className="bg-black text-white p-6 rounded-lg gradient-border relative max-h-[90vh] w-full md:w-[60%] lg:w-[50%] overflow-y-auto custom-scrollbar">
+            <button
+              onClick={closeEventDetailsModal}
+              className="absolute top-3 right-3 text-2xl text-cyan-400 hover:text-fuchsia-400"
+            >
+              &times;
+            </button>
+            <h2 className="text-center text-2xl font-bold text-cyan-400 mb-6">
+              something
+            </h2>
+            <p className="text-gray-300 mb-4">{eventDetailsModal.data.description}</p>
+            <ul className="space-y-2">
+              <li>
+                <strong>Entry Fee:</strong> {eventDetailsModal.data.fee}
+              </li>
+              <li>
+                <strong>Date:</strong> {eventDetailsModal.data.date}
+              </li>
+              <li>
+                <strong>Time:</strong> {eventDetailsModal.data.time}
+              </li>
+              <li>
+                <strong>Venue:</strong> {eventDetailsModal.data.venue}
+              </li> 
+            </ul>
+          </div>
+        </div>
+      )} 
     </div>
   )
 }

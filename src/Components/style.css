@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
 :root {
-    --neon-blue: #94d4d7;
-    --neon-pink: #ff00ff;
+    --neon-blue: #192e46;
+    --neon-pink: #141414;
 }
 
 body {
@@ -8,7 +10,6 @@ body {
     background: #0a0a0a;
     color: #ffffff;
     overflow-x: hidden;
-    background-image: url(../assets/bg.png);
     background-image: url(../assets/bg.png);
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -155,71 +156,107 @@ border-radius: 4px; /* Rounded track */
 
 /* about.css */
 .about-container {
-    /* background: linear-gradient(to bottom, #000, #0a0a2a); */
-    /* color: white; */
-    text-align: center;
-    padding: 50px 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  /* background: linear-gradient(to bottom, #000, #0a0a2a); */
+  /* color: white; */
+  text-align: center;
+  padding: 50px 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color:white;
+  
+}
+
+.about-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.carousel {
+  display: flex;
+  gap: 200px;
+  perspective: 1200px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 20px rgba(255, 255, 255, 0.3);
+  width: 300px;
+  min-height: 350px;
+  text-align: center;
+  transition: transform 0.5s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: rotateY(15deg) scale(1.1);
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin: 15px 0;
+}
+
+.card-description {
+  font-size: 1rem;
+  padding: 0 15px;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+  .neon-hover {
+      font-family: 'Orbitron', sans-serif;
+      position: relative;
+      padding: 5px 15px;
+      text-shadow: 0 0 5px #00aaff, 0 0 10px #00f3ff;
+      transition: color 0.3s ease-in-out;
   }
   
-  .about-title {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+  .neon-hover::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00aaff, #00f3ff);
+      transition: all 0.4s ease-in-out;
   }
   
-  .carousel {
-    display: flex;
-    gap: 30px;
-    perspective: 1200px;
-    overflow-x: auto;
-    padding: 20px;
-    scroll-snap-type: x mandatory;
+  .neon-hover:hover {
+      color: #00f3ff;
+      text-shadow: 0 0 10px #00aaff, 0 0 20px #00f3ff;
   }
   
-  .card {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 5px 20px rgba(255, 255, 255, 0.3);
-    width: 300px;
-    min-height: 350px;
-    text-align: center;
-    transition: transform 0.5s;
-    scroll-snap-align: center;
+  .neon-hover:hover::after {
+      width: 100%;
+      left: 0;
   }
   
-  .card:hover {
-    transform: rotateY(15deg) scale(1.1);
-  }
-  
-  .card-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  .card-title {
-    font-size: 1.5rem;
-    margin: 15px 0;
-  }
-  
-  .card-description {
-    font-size: 1rem;
-    padding: 0 15px;
-  }
-  
-  .stars {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+  .neon-text {
+      text-shadow: 0 0 10px #00aaff, 0 0 20px #00f3ff;
   }
   
