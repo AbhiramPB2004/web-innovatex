@@ -55,17 +55,10 @@ const Dashboard = () => {
 
   return (
     
-    <div id='dashboard' className="py-20 text-center ">
+    <div id='dashboard' className="py-50 text-center ">
       <h1 className="text-4xl  md:text-6xl lg:text-7xl font-bold mb-6 glitch ">
-        <span className="bg-clip-text text-transparent text-center bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+        <span className="bg-clip-text text-transparent text-center text-white">
           <span id="element" className="justify-center self-center"></span>
-        </span>
-      </h1>
-
-      {/* Animated Heading */}
-      <h1 className="relative z-10 text-4xl md:text-6xl lg:text-7xl font-extrabold glitch">
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-          <span id="element"></span>
         </span>
       </h1>
       <p className="relative z-10 mt-3 text-xl md:text-2xl text-gray-300">Unleash Innovation. Embrace the Future.</p>
